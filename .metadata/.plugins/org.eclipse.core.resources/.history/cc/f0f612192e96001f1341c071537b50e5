@@ -1,0 +1,84 @@
+package com.burakkoc.restaurantbooking.wepAPI;
+
+import java.security.Key;
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
+
+import com.burakkoc.restaurantbooking.business.abstracts.UserService;
+import com.burakkoc.restaurantbooking.entities.JwtResponse;
+import com.burakkoc.restaurantbooking.entities.User;
+import com.burakkoc.restaurantbooking.utils.JwtUtil;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+
+@RestController
+@RequestMapping("/api/users")
+public class AuthenticationController {
+
+    private final UserService userService;
+    
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @Autowired
+    public UsersController(UserService userService) {
+        this.userService = userService;
+    }
+    
+    
+    @SuppressWarnings("deprecation")
+	private String generateToken(User user) {
+    	
+    	Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+
+        return Jwts.builder()
+                .setSubject(user.getName())
+                .setExpiration(new Date(System.currentTimeMillis() + 86400000))
+                .signWith(key)
+                .compact();
+    }
+
+    @PostMapping("/register")
+    public void register(@RequestBody User user) {
+        userService.register(user);
+    }
+    
+    
+    @PostMapping("/login")
+    public ResponseEntity login(@RequestParam String email, @RequestParam String password) {
+        try {
+            User user = userService.login(
+                new UsernamePasswordAuthenticationToken(email, password)
+            );
+
+            SecurityContextHolder.getContext().setAuthentication((Authentication) user);
+            String token = generateToken(user);
+            return ResponseEntity.ok(new JwtResponse(token,user.getId(),user.getEmail()));
+
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Geçersiz kullanıcı adı veya şifre.");
+        }
+    }
+    
+    @GetMapping("/confirm")
+    public ResponseEntity<?> confirmEmail(@RequestParam String token) {
+        try {
+            String email = jwtUtil.extractEmail(token);
+            userService.find(email);
+            return ResponseEntity.ok("Hesap başarıyla doğrulandı.");
+        } catch (Exception e) {
+            return ResponseEntity.status(400).body("Geçersiz veya süresi dolmuş token.");
+        }
+    }
+    
+}

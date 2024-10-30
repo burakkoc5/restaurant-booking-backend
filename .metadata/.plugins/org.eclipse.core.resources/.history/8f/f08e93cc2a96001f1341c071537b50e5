@@ -1,0 +1,5 @@
+package com.burakkoc.restaurantbooking.config;
+
+public class ApplicationConfig {
+
+}

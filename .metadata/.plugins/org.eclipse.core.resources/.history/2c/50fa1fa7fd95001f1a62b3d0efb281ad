@@ -1,0 +1,11 @@
+package com.burakkoc.restaurantbooking.dataAccess.abstracts;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.burakkoc.restaurantbooking.entities.Restaurant;
+
+public interface RestaurantRepository extends JpaRepository<Restaurant, Integer>{
+	
+}

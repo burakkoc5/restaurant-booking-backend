@@ -1,0 +1,46 @@
+package com.burakkoc.restaurantbooking.wepAPI;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import com.burakkoc.restaurantbooking.business.abstracts.BookingService;
+import com.burakkoc.restaurantbooking.entities.Booking;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/reservations")
+public class BookingsController {
+
+    private final BookingService bookingService;
+
+    @Autowired
+    public BookingsController(BookingService bookingService) {
+        this.bookingService = bookingService;
+    }
+
+    @PostMapping
+    public void createBooking(@RequestBody Booking booking) {
+        bookingService.add(booking);
+    }
+
+    @GetMapping
+    public List<Booking> getAllBookings() {
+        return bookingService.getAll();
+    }
+
+    @GetMapping("/{id}")
+    public Booking getBookingById(@PathVariable int id) {
+        return bookingService.getById(id);
+    }
+
+    @PutMapping("/{id}")
+    public void updateBooking(@PathVariable int id, @RequestBody Booking booking) {
+        bookingService.update(id, booking);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteBooking(@PathVariable int id) {
+        bookingService.delete(id);
+    }
+}

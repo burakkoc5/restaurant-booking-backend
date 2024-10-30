@@ -1,0 +1,7 @@
+package com.burakkoc.restaurantbooking.business.concretes;
+
+import com.burakkoc.restaurantbooking.business.abstracts.RestaurantService;
+
+public class RestaurantManager implements RestaurantService{
+
+}

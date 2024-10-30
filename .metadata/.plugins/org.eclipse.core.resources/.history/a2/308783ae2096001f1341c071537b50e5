@@ -1,0 +1,88 @@
+package com.burakkoc.restaurantbooking.wepAPI;
+
+import java.security.Key;
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
+
+import com.burakkoc.restaurantbooking.business.abstracts.UserService;
+import com.burakkoc.restaurantbooking.entities.User;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+
+@RestController
+@RequestMapping("/api/users")
+public class UsersController {
+
+    private final UserService userService;
+
+    @Autowired
+    public UsersController(UserService userService) {
+        this.userService = userService;
+    }
+    
+    
+    @SuppressWarnings("deprecation")
+	private String generateToken(User user) {
+    	
+    	Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+
+        return Jwts.builder()
+                .setSubject(user.getName())
+                .setExpiration(new Date(System.currentTimeMillis() + 86400000))
+                .signWith(key)
+                .compact();
+    }
+
+    @PostMapping("/register")
+    public void register(@RequestBody User user) {
+        userService.register(user);
+    }
+    
+    
+    @PostMapping("/login")
+    public ResponseEntity<String> login(@RequestParam String email, @RequestParam String password) {
+        try {
+            User user = userService.login(
+                new UsernamePasswordAuthenticationToken(email, password)
+            );
+
+            SecurityContextHolder.getContext().setAuthentication((Authentication) user);
+            String token = generateToken(user);
+            return ResponseEntity.ok(new JwtResponse(token));
+
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Geçersiz kullanıcı adı veya şifre.");
+        }
+    }
+    
+    @PostMapping("/forgot-password")
+    public void forgotPassword(@RequestParam String email) {
+        userService.forgotPassword(email);
+    }
+
+    @PutMapping("/reset-password")
+    public void resetPassword(@RequestParam int userId, @RequestParam String newPassword) {
+        userService.resetPassword(userId, newPassword);
+    }
+
+    @GetMapping("/profile")
+    public User getProfile(@RequestParam int userId) {
+        return userService.getProfile(userId);
+    }
+
+    @PutMapping("/profile")
+    public User updateProfile(@RequestBody User user) {
+        return userService.updateProfile(user);
+    }
+    
+}

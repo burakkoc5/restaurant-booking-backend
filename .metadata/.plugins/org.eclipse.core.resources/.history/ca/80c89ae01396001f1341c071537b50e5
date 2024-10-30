@@ -1,0 +1,14 @@
+package com.burakkoc.restaurantbooking.business.abstracts;
+
+import java.util.List;
+
+import com.burakkoc.restaurantbooking.entities.Food;
+
+public interface FoodService {
+    
+    Food getById(int id);
+    
+    List<Food> getAll();
+    
+    void add(Food food);
+}

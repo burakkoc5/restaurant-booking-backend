@@ -1,0 +1,36 @@
+package com.burakkoc.restaurantbooking.business.concretes;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import com.burakkoc.restaurantbooking.business.abstracts.RestaurantService;
+import com.burakkoc.restaurantbooking.dataAccess.abstracts.RestaurantRepository;
+import com.burakkoc.restaurantbooking.entities.Restaurant;
+
+
+@Service
+public class RestaurantManager implements RestaurantService{
+	
+	private RestaurantRepository restaurantRepository;
+	
+	@Autowired
+	public RestaurantManager(RestaurantRepository restaurantRepository) {
+		this.restaurantRepository = restaurantRepository;
+	}
+
+	@Override
+	public Restaurant getById(int id) {
+		Optional<Restaurant> restaurant = restaurantRepository.findById(id);
+        return restaurant.orElse(null); // Return null or handle it as needed
+	}
+
+	@Override
+	public List<Restaurant> getAll() {
+		return restaurantRepository.findAll();
+	}
+	
+	
+
+}

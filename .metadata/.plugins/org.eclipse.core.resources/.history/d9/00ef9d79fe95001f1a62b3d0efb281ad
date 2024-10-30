@@ -1,0 +1,14 @@
+package com.burakkoc.restaurantbooking.business.concretes;
+
+import com.burakkoc.restaurantbooking.business.abstracts.RestaurantService;
+import com.burakkoc.restaurantbooking.dataAccess.abstracts.RestaurantRepository;
+
+public class RestaurantManager implements RestaurantService{
+	
+	private RestaurantRepository _restaurantRepository;
+	
+	public RestaurantManager(RestaurantRepository restaurantRepository) {
+		this._restaurantRepository = restaurantRepository;
+	}
+
+}

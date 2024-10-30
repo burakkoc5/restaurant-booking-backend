@@ -1,0 +1,14 @@
+package com.burakkoc.restaurantbooking.business.abstracts;
+
+import java.util.List;
+
+import com.burakkoc.restaurantbooking.entities.BookingHistory;
+
+public interface BookingHistoryService {
+    
+    BookingHistory getById(int id);
+    
+    List<BookingHistory> getAll();
+    
+    void add(BookingHistory bookingHistory);
+}

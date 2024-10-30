@@ -1,0 +1,51 @@
+package com.burakkoc.restaurantbooking.utils;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+public class JwtUtil {
+
+    private String SECRET_KEY = "secret";
+
+    public String generateToken(String email) {
+        Map<String, Object> claims = new HashMap<>();
+        return createToken(claims, email);
+    }
+
+    private String createToken(Map<String, Object> claims, String subject) {
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000)) // 24 saat
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .compact();
+    }
+
+    public boolean isTokenExpired(String token) {
+        try {
+            Date expiration = parseClaimsJws(token).getExpiration();
+            return expiration.before(new Date()); // Eğer expiration tarihi, şu andan önceyse token süresi dolmuş demektir
+        } catch (Exception e) {
+            // Token geçersizse veya başka bir hata oluşursa false döner
+            return true; // Hata durumunda geçersiz token olarak kabul edilir
+        }
+    }
+    
+    public String extractEmail(String token) {
+        return parseClaimsJws(token).getSubject();
+    }
+
+    private Claims parseClaimsJws(String token) {
+        return Jwts.parser() // Updated to use parserBuilder
+                .setSigningKey(SECRET_KEY) // Set the signing key using the Key object
+                .build() // Build the parser
+                .parseClaimsJws(token) // Parse the claims
+                .getBody();
+    }
+}

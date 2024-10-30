@@ -1,0 +1,50 @@
+package com.burakkoc.restaurantbooking.wepAPI;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.burakkoc.restaurantbooking.business.abstracts.BookingHistoryService;
+import com.burakkoc.restaurantbooking.entities.BookingHistory;
+
+@RestController
+@RequestMapping("/api/booking-history")
+public class BookingHistoryController {
+
+    private final BookingHistoryService bookingHistoryService;
+
+    @Autowired
+    public BookingHistoryController(BookingHistoryService bookingHistoryService) {
+        this.bookingHistoryService = bookingHistoryService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<BookingHistory>> getAllBookingHistories() {
+        List<BookingHistory> histories = bookingHistoryService.getAll();
+        return ResponseEntity.ok(histories);
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<BookingHistory>> getBookingHistoriesByUserId(@PathVariable int userId) {
+        List<BookingHistory> histories = bookingHistoryService.getByUserId(userId);
+        return ResponseEntity.ok(histories);
+    }
+
+    @PostMapping
+    public ResponseEntity<BookingHistory> createBookingHistory(@RequestBody BookingHistory bookingHistory) {
+        bookingHistoryService.add(bookingHistory);
+        return ResponseEntity.status(201).body(bookingHistory); // Return created booking history
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BookingHistory> getBookingHistoryById(@PathVariable int id) {
+        BookingHistory bookingHistory = bookingHistoryService.getById(id);
+        if (bookingHistory != null) {
+            return ResponseEntity.ok(bookingHistory);
+        } else {
+            return ResponseEntity.notFound().build(); // Not found
+        }
+    }
+}

@@ -1,0 +1,5 @@
+package com.burakkoc.restaurantbooking.utils;
+
+public class EmailService {
+
+}

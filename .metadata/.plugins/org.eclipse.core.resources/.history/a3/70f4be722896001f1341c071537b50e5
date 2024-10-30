@@ -1,0 +1,12 @@
+package com.burakkoc.restaurantbooking.utils;
+
+public class JwtService {
+
+	public String extractUserEmail(String token) {
+		
+		return null;
+		
+	}
+
+    
+}

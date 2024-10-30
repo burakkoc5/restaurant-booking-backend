@@ -1,0 +1,69 @@
+package com.burakkoc.restaurantbooking.business.concretes;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.burakkoc.restaurantbooking.business.abstracts.UserService;
+import com.burakkoc.restaurantbooking.dataAccess.abstracts.UserRepository;
+import com.burakkoc.restaurantbooking.entities.User;
+
+@Service
+public class UserManager implements UserService {
+
+    private UserRepository userRepository;
+
+    @Autowired
+    public UserManager(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    @Override
+    public User register(User user) {
+        // Implement registration logic (e.g., hashing password)
+        return userRepository.save(user); // Save the user to the database
+    }
+
+    @Override
+    public User login(String email, String password) {
+        // Implement login logic (e.g., check credentials)
+        User user = userRepository.findByEmail(email); // Example method; needs to be implemented in UserRepository
+        if (user != null && user.getPassword().equals(password)) { // Use a proper password hashing comparison
+            return user;
+        }
+        return null; // Return null or throw an exception for invalid login
+    }
+
+    @Override
+    public void logout(int userId) {
+        // Implement logout logic, if needed (e.g., invalidate session)
+    }
+
+    @Override
+    public void forgotPassword(String email) {
+        // Implement logic to handle forgotten password (e.g., send reset link)
+    }
+
+    @Override
+    public void resetPassword(int userId, String newPassword) {
+        // Find user and update password
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            user.setPassword(newPassword); // Hash the password before saving
+            userRepository.save(user);
+        }
+    }
+
+    @Override
+    public User getProfile(int userId) {
+        return getById(userId); // Reuse the method to get user by ID
+    }
+
+    @Override
+    public User updateProfile(User user) {
+        return userRepository.save(user); // Update user profile information
+    }
+}

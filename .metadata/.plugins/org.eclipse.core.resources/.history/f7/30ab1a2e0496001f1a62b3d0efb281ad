@@ -1,0 +1,27 @@
+package com.burakkoc.restaurantbooking.business.requests;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class createBrandRequest {
+	
+    private String name;
+	
+    private String address;
+    
+    private double latitude;
+    
+    private double longitude;
+    
+    private String openTime; // or use java.time.LocalTime for better time handling
+    
+    private String closeTime; // or use java.time.LocalTime for better time handling
+    
+    private String imageUrl;
+	
+
+}

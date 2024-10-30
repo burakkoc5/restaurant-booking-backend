@@ -1,0 +1,13 @@
+package com.burakkoc.restaurantbooking.business.abstracts;
+
+import com.burakkoc.restaurantbooking.business.requests.AuthenticationRequest;
+import com.burakkoc.restaurantbooking.business.requests.RegisterRequest;
+import com.burakkoc.restaurantbooking.business.responses.AuthenticationResponse;
+
+public interface AuthenticationService {
+
+	AuthenticationResponse register(RegisterRequest request);
+
+	AuthenticationResponse authenticate(RegisterRequest request);
+    
+}

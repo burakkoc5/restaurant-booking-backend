@@ -1,0 +1,5 @@
+package com.burakkoc.restaurantbooking.business.concretes;
+
+public class RestaurantManager {
+
+}

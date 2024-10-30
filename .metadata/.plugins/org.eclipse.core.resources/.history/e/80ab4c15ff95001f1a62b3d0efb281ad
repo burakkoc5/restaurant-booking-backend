@@ -1,0 +1,29 @@
+package com.burakkoc.restaurantbooking.business.concretes;
+
+import java.util.List;
+
+import com.burakkoc.restaurantbooking.business.abstracts.RestaurantService;
+import com.burakkoc.restaurantbooking.dataAccess.abstracts.RestaurantRepository;
+import com.burakkoc.restaurantbooking.entities.Restaurant;
+
+public class RestaurantManager implements RestaurantService{
+	
+	private RestaurantRepository restaurantRepository;
+	
+	public RestaurantManager(RestaurantRepository restaurantRepository) {
+		this.restaurantRepository = restaurantRepository;
+	}
+
+	@Override
+	public Restaurant getById(int id) {
+		return restaurantRepository.getById(id);
+	}
+
+	@Override
+	public List<Restaurant> getAll() {
+		return restaurantRepository.findAll();
+	}
+	
+	
+
+}

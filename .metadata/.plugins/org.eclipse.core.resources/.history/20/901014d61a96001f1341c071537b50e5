@@ -1,0 +1,14 @@
+package com.burakkoc.restaurantbooking.business.abstracts;
+
+import java.util.List;
+
+import com.burakkoc.restaurantbooking.entities.User;
+
+public interface UserService {
+    
+    User getById(int id);
+    
+    List<User> getAll();
+    
+    void add(User user);
+}

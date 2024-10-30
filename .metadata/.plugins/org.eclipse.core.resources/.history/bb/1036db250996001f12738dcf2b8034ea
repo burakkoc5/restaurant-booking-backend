@@ -1,0 +1,47 @@
+package com.burakkoc.restaurantbooking.wepAPI;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.burakkoc.restaurantbooking.business.abstracts.RestaurantService;
+import com.burakkoc.restaurantbooking.entities.Restaurant;
+
+@RestController
+@RequestMapping("/api/restaurants")
+public class RestaurantsController {
+	
+	private RestaurantService restaurantService;
+	
+	@Autowired
+	public RestaurantsController(RestaurantService restaurantService) {
+		this.restaurantService = restaurantService;
+	}
+	
+	@GetMapping("/getAll")
+	public List<Restaurant> getAll(){
+		return restaurantService.getAll();
+	}
+	
+	@GetMapping("/getById")
+	public Restaurant getById(@RequestParam int id){
+		return restaurantService.getById(id);
+	}
+	
+	 @PostMapping
+	    public void createRestaurant(@RequestBody Restaurant restaurant) {
+	        // Ensure name and other required fields are not null before saving
+	        if (restaurant.getName() == null) {
+	            return ResponseEntity.badRequest().body(null); // or throw an exception
+	        }
+	        restaurantService.add(restaurant);
+	    }
+
+}

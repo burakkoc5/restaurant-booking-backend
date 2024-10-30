@@ -1,0 +1,42 @@
+package com.burakkoc.restaurantbooking.business.concretes;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.burakkoc.restaurantbooking.business.abstracts.BookingHistoryService;
+import com.burakkoc.restaurantbooking.dataAccess.abstracts.BookingHistoryRepository;
+import com.burakkoc.restaurantbooking.entities.BookingHistory;
+
+@Service
+public class BookingHistoryManager implements BookingHistoryService {
+
+    private final BookingHistoryRepository bookingHistoryRepository;
+
+    @Autowired
+    public BookingHistoryManager(BookingHistoryRepository bookingHistoryRepository) {
+        this.bookingHistoryRepository = bookingHistoryRepository;
+    }
+
+    @Override
+    public BookingHistory getById(int id) {
+        return bookingHistoryRepository.findById(id).orElse(null); // Handle not found scenario as needed
+    }
+
+    @Override
+    public List<BookingHistory> getAll() {
+        return bookingHistoryRepository.findAll();
+    }
+
+    @Override
+    public void add(BookingHistory bookingHistory) {
+        bookingHistoryRepository.save(bookingHistory);
+    }
+
+    @Override
+    public List<BookingHistory> getByUserId(int userId) {
+        return bookingHistoryRepository.findByUserId(userId);
+    }
+}

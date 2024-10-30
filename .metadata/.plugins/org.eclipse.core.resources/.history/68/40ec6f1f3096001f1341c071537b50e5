@@ -1,0 +1,36 @@
+package com.burakkoc.restaurantbooking.business.concretes;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import com.burakkoc.restaurantbooking.business.abstracts.AuthenticationService;
+import com.burakkoc.restaurantbooking.business.requests.RegisterRequest;
+import com.burakkoc.restaurantbooking.business.responses.AuthenticationResponse;
+import com.burakkoc.restaurantbooking.dataAccess.abstracts.UserRepository;
+import com.burakkoc.restaurantbooking.entities.Role;
+import com.burakkoc.restaurantbooking.entities.User;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class AuthenticationManager implements AuthenticationService {
+	
+	private final UserRepository userRepository;
+	private PasswordEncoder passwordEncoder;
+
+    public AuthenticationResponse register(RegisterRequest request) {
+    	var user = User.builder()
+    			.name(request.getName())
+    			.password(passwordEncoder.encode(request.getPassword()))
+    			.email(request.getEmail())
+    			.role(Role.USER)
+    			.build();
+    	return null;
+    }
+    
+    public AuthenticationResponse authenticate(RegisterRequest request) {
+    	return null;
+    }
+
+
+    }

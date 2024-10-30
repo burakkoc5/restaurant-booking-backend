@@ -1,0 +1,10 @@
+package com.burakkoc.restaurantbooking.business.responses;
+
+public class GetAllRestaurantsResponse {
+	
+	private int id;
+	p
+	
+	
+
+}

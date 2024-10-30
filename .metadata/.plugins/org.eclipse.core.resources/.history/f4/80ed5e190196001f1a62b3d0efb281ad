@@ -1,0 +1,18 @@
+package com.burakkoc.restaurantbooking.wepAPI;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.burakkoc.restaurantbooking.business.abstracts.RestaurantService;
+
+@RestController
+@RequestMapping("/api/restaurants")
+public class RestaurantsController {
+	
+	private RestaurantService restaurantService;
+	
+	public RestaurantsController(RestaurantService restaurantService) {
+		this.restaurantService = restaurantService;
+	}
+
+}

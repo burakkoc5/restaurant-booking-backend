@@ -1,0 +1,38 @@
+package com.burakkoc.restaurantbooking.business.concretes;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.burakkoc.restaurantbooking.business.abstracts.BookingService;
+import com.burakkoc.restaurantbooking.dataAccess.abstracts.BookingRepository;
+import com.burakkoc.restaurantbooking.entities.Booking;
+
+@Service
+public class BookingManager implements BookingService {
+
+    private BookingRepository bookingRepository;
+
+    @Autowired
+    public BookingManager(BookingRepository bookingRepository) {
+        this.bookingRepository = bookingRepository;
+    }
+
+    @Override
+    public Booking getById(int id) {
+        Optional<Booking> booking = bookingRepository.findById(id);
+        return booking.orElse(null); // Return null or handle it as needed
+    }
+
+    @Override
+    public List<Booking> getAll() {
+        return bookingRepository.findAll();
+    }
+
+    @Override
+    public void add(Booking booking) {
+        bookingRepository.save(booking);
+    }
+}

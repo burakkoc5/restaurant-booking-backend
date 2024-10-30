@@ -1,0 +1,11 @@
+package com.burakkoc.restaurantbooking.business.abstracts;
+
+import java.util.List;
+import java.util.Optional;
+
+import com.burakkoc.restaurantbooking.entities.User;
+
+public interface UserService {
+    
+	Optional<User> getUserByEmail(String email);
+}

@@ -1,0 +1,5 @@
+package com.burakkoc.restaurantbooking.security;
+
+public class SecurityConfig {
+
+}

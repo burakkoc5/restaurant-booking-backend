@@ -1,0 +1,22 @@
+package com.burakkoc.restaurantbooking.business.abstracts;
+
+import java.util.List;
+
+import com.burakkoc.restaurantbooking.entities.User;
+
+public interface UserService {
+    
+	User register(User user); // For user registration
+    
+    User login(String email, String password); // For user login
+    
+    void logout(int userId); // For user logout
+    
+    void forgotPassword(String email); // For forgot password functionality
+    
+    void resetPassword(int userId, String newPassword); // For resetting password
+    
+    User getProfile(int userId); // For getting user profile
+    
+    User updateProfile(User user); // For updating user profile
+}

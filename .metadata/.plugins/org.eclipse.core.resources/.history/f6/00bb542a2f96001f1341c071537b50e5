@@ -1,0 +1,20 @@
+package com.burakkoc.restaurantbooking.business.concretes;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.burakkoc.restaurantbooking.business.abstracts.AuthenticationService;
+import com.burakkoc.restaurantbooking.business.abstracts.UserService;
+import com.burakkoc.restaurantbooking.dataAccess.abstracts.UserRepository;
+import com.burakkoc.restaurantbooking.entities.User;
+
+@Service
+public class AuthenticationManager implements AuthenticationService {
+
+    private UserRepository userRepository;
+
+
+    }

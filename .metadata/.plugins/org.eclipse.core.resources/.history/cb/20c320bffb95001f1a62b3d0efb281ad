@@ -1,0 +1,77 @@
+package com.burakkoc.restaurantbooking.entities;
+
+import java.time.LocalDate;
+
+
+public class Review {
+
+    private Long id;
+
+    private int rating;
+    private String comment;
+    private LocalDate date;
+    private User user;
+    private Restaurant restaurant;
+    
+    public Review() {
+		// TODO Auto-generated constructor stub
+	}
+    
+    public Review(Long id,int rating, String comment, User user, Restaurant restaurant) {
+		this.comment = comment;
+		this.id = id;
+		this.rating = rating;
+		this.user = user;
+		this.restaurant = restaurant;
+	}
+ 
+
+    // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public void setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
+    }
+}

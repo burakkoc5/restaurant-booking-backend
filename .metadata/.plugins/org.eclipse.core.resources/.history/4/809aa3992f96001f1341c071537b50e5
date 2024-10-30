@@ -1,0 +1,15 @@
+package com.burakkoc.restaurantbooking.business.concretes;
+
+import org.springframework.stereotype.Service;
+import com.burakkoc.restaurantbooking.business.abstracts.AuthenticationService;
+import com.burakkoc.restaurantbooking.dataAccess.abstracts.UserRepository;
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class AuthenticationManager implements AuthenticationService {
+
+    private UserRepository userRepository;
+
+
+    }

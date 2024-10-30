@@ -1,0 +1,11 @@
+package com.burakkoc.restaurantbooking.business.abstracts;
+
+import java.util.List;
+
+import com.burakkoc.restaurantbooking.entities.Restaurant;
+
+public interface RestaurantService {
+	
+	public List<Restaurant> getAll();
+
+}

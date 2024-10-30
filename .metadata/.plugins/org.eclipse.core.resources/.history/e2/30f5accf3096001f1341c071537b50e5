@@ -1,0 +1,6 @@
+package com.burakkoc.restaurantbooking.business.abstracts;
+
+
+public interface AuthenticationService {
+    
+}
